@@ -69,7 +69,7 @@ def reverse_step(x, noise, sigma):
 #   pred_samples: denoised samples
 def denoise(model, noisy_samples, sigma, latents=None):
     # Denoise samples
-    with torch.no_grad():
+    with torch.enable_grad(): # ! enable grad
         with torch.autocast(device_type='cuda', dtype=torch.float16, enabled=mixed_precision):
             if latents is not None:
                 pred_samples = model(latents, noisy_samples, sigma)
@@ -102,7 +102,7 @@ def reverse_diffusion(model, initial_noise, diffusion_steps, latents=None):
         # Step to next (lower) noise level
         next_noisy_samples = reverse_step(pred_samples, pred_noises, next_sigma)
 
-    return pred_samples.detach().cpu()
+    return pred_samples # ! remove .detach().cpu()
 
 
 def is_path(variable):

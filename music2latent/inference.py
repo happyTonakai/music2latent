@@ -88,7 +88,7 @@ def decode_to_representation(model, latents, diffusion_steps=1, device='cuda'):
 #   device: device to run the model on
 # Returns:
 #   latent: compressed latent representation with shape [audio_channels, dim, latent_length]
-@torch.no_grad()
+# ! @torch.no_grad()
 def encode_audio_inference(audio_path, trainer, max_waveform_length_encode, max_batch_size_encode, device='cuda', extract_features=False):
     trainer.gen = trainer.gen.to(device)
     trainer.gen.eval()
@@ -164,7 +164,7 @@ def encode_audio_inference(audio_path, trainer, max_waveform_length_encode, max_
 #   device: device to run the model on
 # Returns:
 #   audio: numpy array of decoded waveform with shape [waveform_samples, audio_channels]
-@torch.no_grad()
+# ! @torch.no_grad()
 def decode_latent_inference(latent, trainer, max_waveform_length_decode, max_batch_size_decode, diffusion_steps=1, device='cuda'):
     trainer.gen = trainer.gen.to(device)
     trainer.gen.eval()
